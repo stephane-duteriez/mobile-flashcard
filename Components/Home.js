@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import PropTypes from 'prop-types'
 import { Entypo } from '@expo/vector-icons'
 import DeckCard from './DeckCard'
 import { green, darkOrange } from '../utils/colors'
 
-export default function Home () {
+export default function Home ({ navigation }) {
   function onPress () {
-    console.log('OnPress')
+    navigation.navigate('AddDeck')
   }
 
   return (
@@ -20,6 +21,10 @@ export default function Home () {
       </TouchableOpacity>
     </View>
   )
+}
+
+Home.propTypes = {
+  navigation: PropTypes.object
 }
 
 const styles = StyleSheet.create({

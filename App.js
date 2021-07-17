@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import Home from './Components/Home'
+import AddDeck from './Components/AddDeck'
 import Constants from 'expo-constants'
-import { darkGreen, darkOrange } from './utils/colors'
+import { darkGreen } from './utils/colors'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Detail from './Components/Detail'
@@ -33,7 +34,24 @@ function MyStack () {
             backgroundColor: darkGreen
           }
         }}/>
-      <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen name="Detail"
+        component={Detail}
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: darkGreen
+          }
+        }}/>
+      <Stack.Screen
+        name="AddDeck"
+        component={AddDeck}
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: darkGreen
+          }
+        }}
+        />
     </Stack.Navigator>
   )
 }
