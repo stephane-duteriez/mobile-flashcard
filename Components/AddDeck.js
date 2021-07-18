@@ -1,12 +1,71 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
+import { green, ligthOrange } from '../utils/colors'
+import MyButton from './MyButton'
+import TextValidation from './TextValidation'
+export default function AddDeck ({ navigation }) {
+  const [deskName, setDeskName] = useState('')
+  const [errorDeskName, setErrorDeskName] = useState('')
+  const [alreadyValidate, setAlreadyValidate] = useState(false)
 
-export default function Detail () {
+  const validateDeskName = (value) => {
+    value === '' ? setErrorDeskName('You need to enter a name!') : setErrorDeskName('')
+    // TODO check already exist
+    return value !== ''
+  }
+
+  const onSubmit = () => {
+    let valide = true
+    valide = validateDeskName(deskName)
+    setAlreadyValidate(true)
+    if (valide) {
+      navigation.navigate('Home')
+    }
+  }
+
+  const onChangeDeskName = (value) => {
+    setDeskName(value)
+    console.log('onChangeQuestion', value + ' ' + alreadyValidate)
+    if (alreadyValidate) {
+      validateDeskName(value)
+    }
+  }
+
   return (
-    <View>
-      <Text>
-        AddDeck
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        What is the tiltle of the new deck ?
       </Text>
+      <TextValidation
+        onChangeText={onChangeDeskName}
+        value={deskName}
+        placeholder="Enter the desk's name!"
+        errorValidation={errorDeskName}
+      />
+      <MyButton
+        label="Submit"
+        onPress={onSubmit}
+        color={green}
+      />
     </View>
   )
 }
+
+AddDeck.propTypes = {
+  navigation: PropTypes.object
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: ligthOrange
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 24,
+    width: '80%'
+  }
+})

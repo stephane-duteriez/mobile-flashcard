@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 import { green, ligthOrange } from '../utils/colors'
 import MyButton from './MyButton'
 import TextValidation from './TextValidation'
 
-export default function AddQuestion () {
+export default function AddQuestion ({ navigation }) {
   const [questionText, setQuestionText] = useState('')
   const [errorQuestion, setErrorQuestion] = useState('')
   const [answerText, setAnswerText] = useState('')
@@ -13,6 +14,9 @@ export default function AddQuestion () {
 
   const validateQuestion = (value) => {
     value === '' ? setErrorQuestion('You need to enter a question!') : setErrorQuestion('')
+    if (value !== '') {
+      navigation.navigate('Detail')
+    }
   }
 
   const validateAnswer = (value) => {
@@ -41,14 +45,15 @@ export default function AddQuestion () {
 
   return (
     <View style={styles.container}>
-      <Text>AddQuestion</Text>
       <TextValidation
+        label="Question"
         onChangeText={onChangeQuestion}
         value={questionText}
         placeholder="Enter the question here!"
         errorValidation={errorQuestion}
       />
       <TextValidation
+        label="Answer"
         onChangeText={onChangeAnswer}
         value={answerText}
         placeholder="Enter the answer here!"
@@ -61,6 +66,10 @@ export default function AddQuestion () {
       />
     </View>
   )
+}
+
+AddQuestion.propTypes = {
+  navigation: PropTypes.object
 }
 
 const styles = StyleSheet.create({

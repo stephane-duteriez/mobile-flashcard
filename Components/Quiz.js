@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
-import ShowQuestion from './showQuestion'
+import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
 import { green, orange } from '../utils/colors'
 
