@@ -1,6 +1,11 @@
+import 'expo-asset'
+import 'react-native-gesture-handler'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 import Home from './Components/Home'
 import AddDeck from './Components/AddDeck'
 import Constants from 'expo-constants'
@@ -81,10 +86,12 @@ function MyStack () {
 export default function App () {
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <MyStatusBar backgroundColor={darkGreen} barStyle='light-content' />
-        <MyStack />
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={styles.container}>
+          <MyStatusBar backgroundColor={darkGreen} barStyle='light-content' />
+          <MyStack />
+        </View>
+      </Provider>
     </NavigationContainer>
   )
 }
