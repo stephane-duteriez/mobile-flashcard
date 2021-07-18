@@ -1,23 +1,24 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 
-export default function DeckCard () {
+export default function DeckCard ({ title, nbrCards }) {
   const navigation = useNavigation()
 
-  function onPress () {
+  function onPress (title) {
     navigation.navigate('Detail', {
-      idDeck: 'Deck_1'
+      idDeck: title
     })
   }
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => onPress(title)}
       >
       <View style={styles.container}>
-        <Text style={styles.title}>Deck 1</Text>
-        <Text style={styles.info}>3 cards</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.info}>{`${nbrCards} cards`}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -40,3 +41,8 @@ const styles = StyleSheet.create({
     color: 'gray'
   }
 })
+
+DeckCard.propTypes = {
+  title: PropTypes.string,
+  nbrCards: PropTypes.number
+}

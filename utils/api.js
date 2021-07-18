@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const MOBILE_FLASHCARD_KEY = 'mobilefalshcard:data'
+export const MOBILE_FLASHCARD_KEY = 'mobileflashcard:data'
 
 const initialData = {
   React: {
@@ -28,8 +28,13 @@ const initialData = {
 }
 
 export function setInitialData () {
-  AsyncStorage.setItem(MOBILE_FLASHCARD_KEY, JSON.stringify(initialData))
-  return initialData
+  return AsyncStorage.getItem(MOBILE_FLASHCARD_KEY)
+    .then((result) => {
+      if (!result) {
+        AsyncStorage.setItem(MOBILE_FLASHCARD_KEY, JSON.stringify(initialData))
+      }
+      return (result ? JSON.parse(result) : initialData)
+    })
 }
 
 export function getDecks () {

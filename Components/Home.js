@@ -1,20 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import DeckCard from './DeckCard'
 import { green } from '../utils/colors'
 import FloatingButton from './FloatingButton'
+import { setInitialData } from '../utils/api'
+import { receiveData } from '../actions'
 
-export default function Home ({ navigation }) {
+function Home ({ navigation }) {
+  const dispatch = useDispatch()
+  const decks = useSelector((decks) => {
+    return decks
+  })
+
   function onPress () {
     navigation.navigate('AddDeck')
   }
 
+  useEffect(() => {
+    setInitialData()
+      .then((decks) => dispatch(receiveData(decks)))
+  }, [])
+
+  console.log('Home', decks)
   return (
     <View style={styles.container}>
-      <DeckCard />
+      {Object.keys(decks).map((deckTitle) => {
+        console.log('in loop', deckTitle)
+        return (
+        <DeckCard
+          key={deckTitle}
+          title={decks[deckTitle].title}
+          nbrCards={decks[deckTitle].questions.length}
+        />
+        )
+      })}
       <FloatingButton
-        onPress={onPress} />
+          onPress={onPress} />
+
     </View>
   )
 }
@@ -30,3 +54,5 @@ const styles = StyleSheet.create({
     backgroundColor: green
   }
 })
+
+export default connect()(Home)
