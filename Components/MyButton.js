@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
-export default function MyButton({ label, onPress, color }) {
+export default function MyButton ({ label, onPress, color }) {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.button, { backgroundColor: color }]}>
       <Text>

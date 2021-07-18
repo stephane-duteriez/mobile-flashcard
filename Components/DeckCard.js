@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 export default function DeckCard () {
   const navigation = useNavigation()
@@ -16,7 +16,7 @@ export default function DeckCard () {
       onPress={onPress}
       >
       <View style={styles.container}>
-        <Text style={styles.title}>Deck 1</Text>  
+        <Text style={styles.title}>Deck 1</Text>
         <Text style={styles.info}>3 cards</Text>
       </View>
     </TouchableOpacity>

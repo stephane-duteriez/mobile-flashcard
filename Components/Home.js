@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
-import { Entypo } from '@expo/vector-icons'
 import DeckCard from './DeckCard'
-import { green, darkOrange } from '../utils/colors'
+import { green } from '../utils/colors'
+import FloatingButton from './FloatingButton'
 
 export default function Home ({ navigation }) {
   function onPress () {
@@ -13,12 +13,8 @@ export default function Home ({ navigation }) {
   return (
     <View style={styles.container}>
       <DeckCard />
-      <TouchableOpacity
-      onPress={onPress}
-      style={styles.floatingButton}
-        >
-        <Entypo name="plus" size={36} color="black" />
-      </TouchableOpacity>
+      <FloatingButton
+        onPress={onPress} />
     </View>
   )
 }
@@ -32,18 +28,5 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     flex: 1,
     backgroundColor: green
-  },
-  floatingButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    alignSelf: 'flex-end',
-    alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: darkOrange,
-    borderRadius: 25,
-    paddingTop: 5,
-    height: 50,
-    width: 50
   }
 })

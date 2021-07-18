@@ -8,6 +8,8 @@ import { darkGreen } from './utils/colors'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Detail from './Components/Detail'
+import Quiz from './Components/Quiz'
+import AddQuestion from './Components/AddQuestion'
 
 function MyStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -21,7 +23,7 @@ MyStatusBar.propTypes = {
   backgroundColor: PropTypes.string
 }
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 function MyStack () {
   return (
@@ -45,6 +47,26 @@ function MyStack () {
       <Stack.Screen
         name="AddDeck"
         component={AddDeck}
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: darkGreen
+          }
+        }}
+        />
+      <Stack.Screen
+        name="Quiz"
+        component={Quiz}
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: darkGreen
+          }
+        }}
+        />
+      <Stack.Screen
+        name="AddQuestion"
+        component={AddQuestion}
         options={{
           headerTintColor: 'white',
           headerStyle: {
