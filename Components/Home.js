@@ -23,11 +23,9 @@ function Home ({ navigation }) {
       .then((decks) => dispatch(receiveData(decks)))
   }, [])
 
-  console.log('Home', decks)
   return (
     <View style={styles.container}>
       {Object.keys(decks).map((deckTitle) => {
-        console.log('in loop', deckTitle)
         return (
         <DeckCard
           key={deckTitle}

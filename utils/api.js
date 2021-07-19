@@ -42,7 +42,7 @@ export function getDecks () {
 }
 
 export function getDeck (name) {
-  AsyncStorage.getItem(MOBILE_FLASHCARD_KEY)
+  return AsyncStorage.getItem(MOBILE_FLASHCARD_KEY)
     .then((results) => {
       return results[name]
     })
@@ -51,7 +51,7 @@ export function getDeck (name) {
 export function saveDeckTitle (name) {
   const decks = getDecks()
   if (!decks[name]) {
-    AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify({
+    return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify({
       [name]: {
         title: name,
         questions: []
@@ -62,15 +62,22 @@ export function saveDeckTitle (name) {
 }
 
 export function addCardToDesk (name, card) {
-  const decks = getDecks()
-  if (decks[name]) {
-    const tmpDeck = {
-      name: {
-        questions: [
-          card
-        ]
+  getDecks().then((result) => {
+    const decks = JSON.parse(result)
+    console.log('addCardToDesk', decks)
+    console.log('addCardToDesk', name)
+    console.log('addCardToDesk', card)
+    if (decks[name]) {
+      console.log('in if')
+      const tmpDeck = {
+        [name]: {
+          questions: [
+            ...decks[name].questions,
+            card
+          ]
+        }
       }
+      return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify(tmpDeck))
     }
-    AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify(tmpDeck))
-  }
+  })
 }

@@ -4,33 +4,59 @@ import PropTypes from 'prop-types'
 import { green, ligthOrange } from '../utils/colors'
 import MyButton from './MyButton'
 import TextValidation from './TextValidation'
+import { addCardToDesk } from '../utils/api'
+import { addCard } from '../actions'
 
-export default function AddQuestion ({ navigation }) {
+export default function AddQuestion ({ navigation, route }) {
   const [questionText, setQuestionText] = useState('')
   const [errorQuestion, setErrorQuestion] = useState('')
   const [answerText, setAnswerText] = useState('')
   const [errorAnswer, setErrorAnswer] = useState('')
   const [alreadyValidate, setAlreadyValidate] = useState(false)
 
+  const { deskTitle } = route.params
+
   const validateQuestion = (value) => {
-    value === '' ? setErrorQuestion('You need to enter a question!') : setErrorQuestion('')
-    if (value !== '') {
-      navigation.navigate('Detail')
+    if (value === '') {
+      setErrorQuestion('You need to enter a question!')
+      return false
     }
+    setErrorQuestion('')
+    return true
   }
 
   const validateAnswer = (value) => {
-    value === '' ? setErrorAnswer('The answer can\'t be empty!') : setErrorAnswer('')
+    if (value === '') {
+      setErrorAnswer('The answer can\'t be empty!')
+      return false
+    }
+    setErrorAnswer('')
+    return true
   }
   const onSubmit = () => {
-    validateAnswer(answerText)
-    validateQuestion(questionText)
+    let valide = true
+    valide &= validateAnswer(answerText)
+    valide &= validateQuestion(questionText)
     setAlreadyValidate(true)
+    if (valide) {
+      addCardToDesk(deskTitle, {
+        question: questionText,
+        answer: answerText
+      })
+
+      addCard(deskTitle, {
+        question: questionText,
+        answer: answerText
+      })
+
+      navigation.navigate('Detail', {
+        deskTitle: deskTitle
+      })
+    }
   }
 
   const onChangeQuestion = (value) => {
     setQuestionText(value)
-    console.log('onChangeQuestion', value + ' ' + alreadyValidate)
     if (alreadyValidate) {
       validateQuestion(value)
     }
@@ -69,6 +95,9 @@ export default function AddQuestion ({ navigation }) {
 }
 
 AddQuestion.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.object
+  }),
   navigation: PropTypes.object
 }
 

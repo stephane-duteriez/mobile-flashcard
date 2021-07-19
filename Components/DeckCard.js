@@ -8,7 +8,7 @@ export default function DeckCard ({ title, nbrCards }) {
 
   function onPress (title) {
     navigation.navigate('Detail', {
-      idDeck: title
+      deskTitle: title
     })
   }
 

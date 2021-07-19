@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { green, ligthOrange } from '../utils/colors'
 import MyButton from './MyButton'
 import TextValidation from './TextValidation'
+import { saveDeckTitle } from '../utils/api'
+import { addDeck } from '../actions'
 export default function AddDeck ({ navigation }) {
   const [deskName, setDeskName] = useState('')
   const [errorDeskName, setErrorDeskName] = useState('')
@@ -20,13 +22,15 @@ export default function AddDeck ({ navigation }) {
     valide = validateDeskName(deskName)
     setAlreadyValidate(true)
     if (valide) {
+      saveDeckTitle(deskName)
+        .then(() => addDeck(deskName))
+      // we are optimist that it should work
       navigation.navigate('Home')
     }
   }
 
   const onChangeDeskName = (value) => {
     setDeskName(value)
-    console.log('onChangeQuestion', value + ' ' + alreadyValidate)
     if (alreadyValidate) {
       validateDeskName(value)
     }
