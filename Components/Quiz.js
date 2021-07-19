@@ -10,6 +10,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 function Quiz ({ navigation, route }) {
   const [index, setIndex] = useState(0)
   const [correctAnswers, setCorrectAnswers] = useState(0)
+  const [reset, setReset] = useState(Math.random())
 
   const { deskTitle } = route.params
 
@@ -20,7 +21,7 @@ function Quiz ({ navigation, route }) {
       fadeAnim,
       {
         toValue: 1,
-        duration: 1000,
+        duration: 500,
         useNativeDriver: true
       }
     ).start()
@@ -31,8 +32,19 @@ function Quiz ({ navigation, route }) {
   })
 
   const result = (correct) => {
+    fadeAnim.setValue(0)
     setCorrectAnswers(correct ? correctAnswers + 1 : correctAnswers)
-    setIndex(index + 1)
+    setReset(Math.random)
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0,
+        duration: 50,
+        useNativeDriver: true
+      }
+    ).start(() => {
+      setIndex(index + 1)
+    })
   }
 
   if (index !== questions.length) {
@@ -43,6 +55,7 @@ function Quiz ({ navigation, route }) {
         <ShowQuestion
           questionText={questions[index].question}
           answerText={questions[index].answer}
+          reset={reset}
          />
         <View style={{ flexDirection: 'row' }}>
           <MyButton
