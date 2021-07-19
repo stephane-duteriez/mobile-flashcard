@@ -32,14 +32,6 @@ function Quiz ({ navigation, route }) {
 
   const result = (correct) => {
     setCorrectAnswers(correct ? correctAnswers + 1 : correctAnswers)
-    Animated.timing(
-      fadeAnim,
-      {
-        toValue: 0,
-        duration: 1,
-        useNativeDriver: true
-      }
-    ).start()
     setIndex(index + 1)
   }
 
