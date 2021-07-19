@@ -4,7 +4,8 @@ import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
-import { green, orange } from '../utils/colors'
+import { darkGreen, green, lightGreen, orange } from '../utils/colors'
+import { Ionicons } from '@expo/vector-icons'
 
 function Quiz ({ navigation, route }) {
   const [index, setIndex] = useState(0)
@@ -31,10 +32,12 @@ function Quiz ({ navigation, route }) {
         <View style={{ flexDirection: 'row' }}>
           <MyButton
             label="Correct"
+            Icon={() => <Ionicons name="md-thumbs-up" size={24} color="black" />}
             onPress={() => result(true)}
             color={green}/>
           <MyButton
             label="Incorrect"
+            Icon={() => <Ionicons name="md-thumbs-down" size={24} color="black" />}
             onPress={() => result(false)}
             color={orange}/>
         </View>
@@ -43,9 +46,21 @@ function Quiz ({ navigation, route }) {
   }
   return (
     <View style={styles.container}>
-      <Text>
-         {`You have ${correctAnswers} answers on ${questions.length}`}
-      </Text>
+      <View style={styles.result}>
+        <View style={[styles.subResult, {
+          borderBottomColor: darkGreen,
+          borderBottomWidth: 2
+        }]}>
+          <Text style={styles.text}>
+            {correctAnswers}
+          </Text>
+        </View>
+        <View style={styles.subResult}>
+          <Text style={styles.text}>
+            {questions.length}
+          </Text>
+        </View>
+      </View>
       <View style={{ flexDirection: 'row' }}>
           <MyButton
             label="Return to Deck"
@@ -70,6 +85,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  result: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: lightGreen,
+    justifyContent: 'center'
+  },
+  subResult: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 40,
+    textAlign: 'center'
   }
 })
 
