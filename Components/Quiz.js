@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
+import { View, Text, StyleSheet, Animated } from 'react-native'
 import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
 import { darkGreen, green, lightGreen, orange } from '../utils/colors'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 function Quiz ({ navigation, route }) {
   const [index, setIndex] = useState(0)
@@ -13,18 +13,41 @@ function Quiz ({ navigation, route }) {
 
   const { deskTitle } = route.params
 
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }
+    ).start()
+  }, [index])
+
   const questions = useSelector((decks) => {
     return decks[deskTitle].questions
   })
 
   const result = (correct) => {
     setCorrectAnswers(correct ? correctAnswers + 1 : correctAnswers)
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0,
+        duration: 1,
+        useNativeDriver: true
+      }
+    ).start()
     setIndex(index + 1)
   }
 
   if (index !== questions.length) {
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, {
+        opacity: fadeAnim
+      }]}>
         <ShowQuestion
           questionText={questions[index].question}
           answerText={questions[index].answer}
@@ -41,7 +64,7 @@ function Quiz ({ navigation, route }) {
             onPress={() => result(false)}
             color={orange}/>
         </View>
-      </View>
+      </Animated.View>
     )
   }
   return (
@@ -68,6 +91,7 @@ function Quiz ({ navigation, route }) {
             color={green}/>
           <MyButton
             label="Retry the quiz"
+            Icon={() => <MaterialCommunityIcons name="restart" size={24} color="black" />}
             onPress={() => {
               setIndex(0)
               setCorrectAnswers(0)

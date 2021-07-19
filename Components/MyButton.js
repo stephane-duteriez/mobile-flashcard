@@ -32,5 +32,5 @@ MyButton.propTypes = {
   label: PropTypes.string,
   onPress: PropTypes.func,
   color: PropTypes.string,
-  Icon: PropTypes.func
+  Icon: PropTypes.node
 }
