@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { connect, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { green, ligthOrange } from '../utils/colors'
 import MyButton from './MyButton'
@@ -7,7 +8,7 @@ import TextValidation from './TextValidation'
 import { addCardToDesk } from '../utils/api'
 import { addCard } from '../actions'
 
-export default function AddQuestion ({ navigation, route }) {
+function AddQuestion ({ navigation, route }) {
   const [questionText, setQuestionText] = useState('')
   const [errorQuestion, setErrorQuestion] = useState('')
   const [answerText, setAnswerText] = useState('')
@@ -15,6 +16,7 @@ export default function AddQuestion ({ navigation, route }) {
   const [alreadyValidate, setAlreadyValidate] = useState(false)
 
   const { deskTitle } = route.params
+  const dispatch = useDispatch()
 
   const validateQuestion = (value) => {
     if (value === '') {
@@ -44,10 +46,10 @@ export default function AddQuestion ({ navigation, route }) {
         answer: answerText
       })
 
-      addCard(deskTitle, {
+      dispatch(addCard(deskTitle, {
         question: questionText,
         answer: answerText
-      })
+      }))
 
       navigation.navigate('Detail', {
         deskTitle: deskTitle
@@ -100,6 +102,8 @@ AddQuestion.propTypes = {
   }),
   navigation: PropTypes.object
 }
+
+export default connect()(AddQuestion)
 
 const styles = StyleSheet.create({
   container: {

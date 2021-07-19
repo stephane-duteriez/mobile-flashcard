@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import { connect, useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import DeckCard from './DeckCard'
@@ -23,17 +23,20 @@ function Home ({ navigation }) {
       .then((decks) => dispatch(receiveData(decks)))
   }, [])
 
+  const arrayDecks = Object.keys(decks).map((deckTitle) => {
+    return {
+      key: deckTitle,
+      title: decks[deckTitle].title,
+      nbrCards: decks[deckTitle].questions.length
+    }
+  })
+
   return (
     <View style={styles.container}>
-      {Object.keys(decks).map((deckTitle) => {
-        return (
-        <DeckCard
-          key={deckTitle}
-          title={decks[deckTitle].title}
-          nbrCards={decks[deckTitle].questions.length}
-        />
-        )
-      })}
+      <FlatList
+         data={arrayDecks}
+         renderItem={({ item }) => <DeckCard title={item.title} nbrCards={item.nbrCards} />}
+      />
       <FloatingButton
           onPress={onPress} />
 

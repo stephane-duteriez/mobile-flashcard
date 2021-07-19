@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { connect, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { green, ligthOrange } from '../utils/colors'
 import MyButton from './MyButton'
 import TextValidation from './TextValidation'
 import { saveDeckTitle } from '../utils/api'
 import { addDeck } from '../actions'
-export default function AddDeck ({ navigation }) {
+function AddDeck ({ navigation }) {
   const [deskName, setDeskName] = useState('')
   const [errorDeskName, setErrorDeskName] = useState('')
   const [alreadyValidate, setAlreadyValidate] = useState(false)
 
+  const dispatch = useDispatch()
   const validateDeskName = (value) => {
     value === '' ? setErrorDeskName('You need to enter a name!') : setErrorDeskName('')
     // TODO check already exist
@@ -23,7 +25,7 @@ export default function AddDeck ({ navigation }) {
     setAlreadyValidate(true)
     if (valide) {
       saveDeckTitle(deskName)
-        .then(() => addDeck(deskName))
+        .then(() => dispatch(addDeck(deskName)))
       // we are optimist that it should work
       navigation.navigate('Home')
     }
@@ -59,6 +61,8 @@ export default function AddDeck ({ navigation }) {
 AddDeck.propTypes = {
   navigation: PropTypes.object
 }
+
+export default connect()(AddDeck)
 
 const styles = StyleSheet.create({
   container: {

@@ -64,9 +64,6 @@ export function saveDeckTitle (name) {
 export function addCardToDesk (name, card) {
   getDecks().then((result) => {
     const decks = JSON.parse(result)
-    console.log('addCardToDesk', decks)
-    console.log('addCardToDesk', name)
-    console.log('addCardToDesk', card)
     if (decks[name]) {
       console.log('in if')
       const tmpDeck = {

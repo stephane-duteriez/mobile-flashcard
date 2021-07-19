@@ -10,8 +10,8 @@ function decks (state = {}, action) {
     case ADD_DECK :
       return {
         ...state,
-        [action.name]: {
-          title: action.name,
+        [action.title]: {
+          title: action.title,
           questions: []
         }
       }
