@@ -126,5 +126,5 @@ const styles = StyleSheet.create({
 ShowQuestion.propTypes = {
   questionText: PropTypes.string,
   answerText: PropTypes.string,
-  reset: PropTypes.bool
+  reset: PropTypes.number
 }

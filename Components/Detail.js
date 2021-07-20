@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Entypo } from '@expo/vector-icons'
 import MyButton from './MyButton'
 import { lightGreen, green } from '../utils/colors'
 import FloatingButton from './FloatingButton'
@@ -18,10 +19,11 @@ function Detail ({ route, navigation }) {
         {deskTitle}
       </Text>
       <Text style={styles.info}>
-        {deck.questions.length}
+        {`${deck.questions.length} cards`}
       </Text>
       <MyButton
         label= "Start Quiz"
+        Icon={() => <Entypo name="documents" size={24} color="black" />}
         color={lightGreen}
         onPress={() => navigation.navigate('Quiz', {
           deskTitle: deskTitle
