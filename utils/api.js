@@ -66,7 +66,6 @@ export function addCardToDesk (name, card) {
     .then(JSON.parse)
     .then((decks) => {
       if (decks[name]) {
-        console.log('in if')
         const tmpDeck = {
           [name]: {
             questions: [

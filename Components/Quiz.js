@@ -31,12 +31,10 @@ function Quiz ({ route }) {
   }, [index])
 
   const questions = useSelector((decks) => {
-    console.log('get questions')
     return decks[deskTitle].questions
   })
 
   useEffect(() => {
-    console.log('shuffle questions')
     setRandomQuestion(shuffleArray(questions))
   }, [])
 

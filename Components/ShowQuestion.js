@@ -14,7 +14,6 @@ export default function ShowQuestion ({ questionText, answerText, reset }) {
   const onChange = () => {
     setRecto(!recto)
   }
-  console.log('showQuestion', answerText)
   return (
     <View style={styles.container}>
       <Flip
