@@ -4,7 +4,7 @@ import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
-import { green, lightGreen, orange } from '../utils/colors'
+import { green, orange } from '../utils/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { setLocalNotification, clearLocalNotification, shuffleArray } from '../utils/helpers'
 import ShowResult from './ShowResult'
@@ -85,7 +85,7 @@ function Quiz ({ route }) {
       </Animated.View>
     )
   }
-  // we pass one deck of cards, we can reset the notification for the following day
+  // When we pass one deck of cards, we can reset the notification for the following day
   clearLocalNotification()
     .then(setLocalNotification)
   return (
@@ -108,22 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  result: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: lightGreen,
-    justifyContent: 'center'
-  },
-  subResult: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text: {
-    fontSize: 40,
-    textAlign: 'center'
   },
   remaining: {
     fontSize: 18
