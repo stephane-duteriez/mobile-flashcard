@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
 import { darkGreen, green, lightGreen, orange } from '../utils/colors'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
 
 function Quiz ({ navigation, route }) {
   const [index, setIndex] = useState(0)
@@ -72,6 +73,9 @@ function Quiz ({ navigation, route }) {
       </Animated.View>
     )
   }
+
+  clearLocalNotification()
+    .then(setLocalNotification)
   return (
     <View style={styles.container}>
       <View style={styles.result}>
@@ -93,6 +97,7 @@ function Quiz ({ navigation, route }) {
           <MyButton
             label="Return to Deck"
             onPress={() => navigation.navigate('Detail')}
+            Icon={() => <Entypo name="back" size={24} color="black" />}
             color={green}/>
           <MyButton
             label="Retry the quiz"
