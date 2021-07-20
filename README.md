@@ -23,7 +23,6 @@ To get started
 * React-native
 
 ### TO DO
-* storage get -> use JSON.parse in then
 * randomize the deck
 
 ### Imporvement possible

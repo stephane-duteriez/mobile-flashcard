@@ -62,19 +62,20 @@ export function saveDeckTitle (name) {
 }
 
 export function addCardToDesk (name, card) {
-  getDecks().then((result) => {
-    const decks = JSON.parse(result)
-    if (decks[name]) {
-      console.log('in if')
-      const tmpDeck = {
-        [name]: {
-          questions: [
-            ...decks[name].questions,
-            card
-          ]
+  getDecks()
+    .then(JSON.parse)
+    .then((decks) => {
+      if (decks[name]) {
+        console.log('in if')
+        const tmpDeck = {
+          [name]: {
+            questions: [
+              ...decks[name].questions,
+              card
+            ]
+          }
         }
+        return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify(tmpDeck))
       }
-      return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify(tmpDeck))
-    }
-  })
+    })
 }
