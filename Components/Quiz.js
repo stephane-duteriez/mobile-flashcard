@@ -52,7 +52,6 @@ function Quiz ({ route }) {
     })
   }
   const nbrQuestionsRemaining = randomQuestion.length - index
-  console.log('before render', randomQuestion)
   if (randomQuestion.length === 0) {
     return (null)
   }
@@ -94,7 +93,6 @@ function Quiz ({ route }) {
       onPressRetry={() => {
         setIndex(0)
         setCorrectAnswers(0)
-        console.log('before SHuffle', questions)
         setRandomQuestion(shuffleArray(questions))
       }}
       nbrQuestions={questions.length}

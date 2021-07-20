@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useRef, useEffect } from 'react'
+import { Text, StyleSheet, Animated } from 'react-native'
 import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Entypo } from '@expo/vector-icons'
@@ -13,8 +13,25 @@ function Detail ({ route, navigation }) {
     return decks[deskTitle]
   })
 
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true
+      }
+    ).start()
+  }, [])
+
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, {
+      transform: [
+        { scale: fadeAnim }
+      ]
+    }]}>
       <Text style={styles.title}>
         {deskTitle}
       </Text>
@@ -33,7 +50,7 @@ function Detail ({ route, navigation }) {
         onPress={() => navigation.navigate('AddQuestion', {
           deskTitle: deskTitle
         })} />
-    </View>
+    </Animated.View>
   )
 }
 
