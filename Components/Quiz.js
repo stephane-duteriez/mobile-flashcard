@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, StyleSheet, Animated } from 'react-native'
+import { View, Text, StyleSheet, Animated } from 'react-native'
 import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import ShowQuestion from './ShowQuestion'
@@ -24,7 +24,7 @@ function Quiz ({ route }) {
       fadeAnim,
       {
         toValue: 1,
-        duration: 500,
+        duration: 1000,
         useNativeDriver: true
       }
     ).start()
@@ -33,11 +33,9 @@ function Quiz ({ route }) {
   const questions = useSelector((decks) => {
     return decks[deskTitle].questions
   })
-
   useEffect(() => {
     setRandomQuestion(shuffleArray(questions))
   }, [])
-
   const result = (correct) => {
     fadeAnim.setValue(0)
     setCorrectAnswers(correct ? correctAnswers + 1 : correctAnswers)
@@ -53,12 +51,21 @@ function Quiz ({ route }) {
       setIndex(index + 1)
     })
   }
-
+  const nbrQuestionsRemaining = randomQuestion.length - index
+  console.log('before render', randomQuestion)
+  if (randomQuestion.length === 0) {
+    return (null)
+  }
   if (index !== randomQuestion.length) {
     return (
       <Animated.View style={[styles.container, {
         opacity: fadeAnim
       }]}>
+        <View style={styles.remainingContainer}>
+          <Text style={styles.remaining}>
+            {`${nbrQuestionsRemaining} question${nbrQuestionsRemaining > 1 ? 's' : ''} left`}
+          </Text>
+        </View>
         <ShowQuestion
           questionText={randomQuestion[index].question}
           answerText={randomQuestion[index].answer}
@@ -87,6 +94,7 @@ function Quiz ({ route }) {
       onPressRetry={() => {
         setIndex(0)
         setCorrectAnswers(0)
+        console.log('before SHuffle', questions)
         setRandomQuestion(shuffleArray(questions))
       }}
       nbrQuestions={questions.length}
@@ -118,6 +126,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40,
     textAlign: 'center'
+  },
+  remaining: {
+    fontSize: 18
+  },
+  remainingContainer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 30
   }
 })
 
