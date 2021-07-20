@@ -43,16 +43,13 @@ export function setLocalNotification () {
             if (status === 'granted') {
               Notifications.cancelAllScheduledNotificationsAsync()
 
-              // const tomorrow = new Date()
-              // tomorrow.setDate(tomorrow.getDate())
-              // tomorrow.setHours(21)
-              // tomorrow.setMinutes(20)
+              const tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate())
+              tomorrow.setHours(8)
+              tomorrow.setMinutes(0)
               Notifications.scheduleNotificationAsync({
                 content: createNotification(),
-                trigger: {
-                  seconds: 60 * 5,
-                  repeats: true
-                }
+                trigger: tomorrow
               })
 
               AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
