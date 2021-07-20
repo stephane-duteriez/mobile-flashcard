@@ -6,12 +6,13 @@ import ShowQuestion from './ShowQuestion'
 import MyButton from './MyButton'
 import { green, lightGreen, orange } from '../utils/colors'
 import { Ionicons } from '@expo/vector-icons'
-import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
+import { setLocalNotification, clearLocalNotification, shuffleArray } from '../utils/helpers'
 import ShowResult from './ShowResult'
 
-function Quiz ({ navigation, route }) {
+function Quiz ({ route }) {
   const [index, setIndex] = useState(0)
   const [correctAnswers, setCorrectAnswers] = useState(0)
+  const [randomQuestion, setRandomQuestion] = useState([])
   const [reset, setReset] = useState(Math.random())
 
   const { deskTitle } = route.params
@@ -30,8 +31,14 @@ function Quiz ({ navigation, route }) {
   }, [index])
 
   const questions = useSelector((decks) => {
+    console.log('get questions')
     return decks[deskTitle].questions
   })
+
+  useEffect(() => {
+    console.log('shuffle questions')
+    setRandomQuestion(shuffleArray(questions))
+  }, [])
 
   const result = (correct) => {
     fadeAnim.setValue(0)
@@ -49,14 +56,14 @@ function Quiz ({ navigation, route }) {
     })
   }
 
-  if (index !== questions.length) {
+  if (index !== randomQuestion.length) {
     return (
       <Animated.View style={[styles.container, {
         opacity: fadeAnim
       }]}>
         <ShowQuestion
-          questionText={questions[index].question}
-          answerText={questions[index].answer}
+          questionText={randomQuestion[index].question}
+          answerText={randomQuestion[index].answer}
           reset={reset}
          />
         <View style={{ flexDirection: 'row' }}>
@@ -82,6 +89,7 @@ function Quiz ({ navigation, route }) {
       onPressRetry={() => {
         setIndex(0)
         setCorrectAnswers(0)
+        setRandomQuestion(shuffleArray(questions))
       }}
       nbrQuestions={questions.length}
       correctAnswers={correctAnswers}
@@ -118,6 +126,5 @@ const styles = StyleSheet.create({
 Quiz.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.object
-  }),
-  navigation: PropTypes.object
+  })
 }

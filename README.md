@@ -22,9 +22,6 @@ To get started
 * React
 * React-native
 
-### TO DO
-* randomize the deck
-
 ### Imporvement possible
 * remove deck or cards
 * use back-end service to store the decks

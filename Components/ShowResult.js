@@ -68,5 +68,5 @@ const styles = StyleSheet.create({
 ShowResult.propTypes = {
   onPressRetry: PropTypes.func,
   nbrQuestions: PropTypes.number,
-  correctAnswers: PropTypes.numbers
+  correctAnswers: PropTypes.number
 }
