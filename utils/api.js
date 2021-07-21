@@ -49,16 +49,29 @@ export function getDeck (name) {
 }
 
 export function saveDeckTitle (name) {
-  const decks = getDecks()
-  if (!decks[name]) {
-    return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify({
-      [name]: {
-        title: name,
-        questions: []
+  getDecks().then(JSON.parse)
+    .then((decks) => {
+      if (!decks[name]) {
+        return AsyncStorage.mergeItem(MOBILE_FLASHCARD_KEY, JSON.stringify({
+          [name]: {
+            title: name,
+            questions: []
+          }
+        }))
       }
-    }))
-  }
-  // should send a error if name already used
+    })
+}
+
+export function deleteDeck (name) {
+  getDecks().then(JSON.parse)
+    .then((decks) => {
+      if (decks[name]) {
+        const tmpDecks = { ...decks }
+        delete tmpDecks[name]
+        // To remove a deck we have to extract all the decks and add them back
+        AsyncStorage.setItem(MOBILE_FLASHCARD_KEY, JSON.stringify(tmpDecks))
+      }
+    })
 }
 
 export function addCardToDesk (name, card) {

@@ -1,15 +1,25 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { connect, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
+import { MaterialIcons } from '@expo/vector-icons'
+import { deleteDeck } from '../utils/api'
+import { removeDeck } from '../actions'
 
-export default function DeckCard ({ title, nbrCards }) {
+function DeckCard ({ title, nbrCards }) {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
   function onPress (title) {
     navigation.navigate('Detail', {
       deskTitle: title
     })
+  }
+
+  const onPressDelet = () => {
+    deleteDeck(title)
+    dispatch(removeDeck(title))
   }
 
   return (
@@ -19,6 +29,9 @@ export default function DeckCard ({ title, nbrCards }) {
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.info}>{`${nbrCards} cards`}</Text>
+        <TouchableOpacity onPress={onPressDelet}>
+          <MaterialIcons name="delete" size={24} color="black" />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   )
@@ -46,3 +59,5 @@ DeckCard.propTypes = {
   title: PropTypes.string,
   nbrCards: PropTypes.number
 }
+
+export default connect()(DeckCard)

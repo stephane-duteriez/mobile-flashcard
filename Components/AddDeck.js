@@ -25,7 +25,8 @@ function AddDeck ({ navigation }) {
     setAlreadyValidate(true)
     if (valide) {
       saveDeckTitle(deskName)
-        .then(() => dispatch(addDeck(deskName)))
+      dispatch(addDeck(deskName))
+
       // we are optimist that it should work
       navigation.navigate('Home')
     }
